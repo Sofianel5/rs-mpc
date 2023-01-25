@@ -1,25 +1,32 @@
-pub struct Player {
-    pub name: String,
-    pub ip: IpAddr,
-    pub port: u16,
-}
 
 pub struct SubNet {
-    pub hosts: Vec<String>, // ip addrs or urls of peers
-    pub ports: Vec<u16>, // ports of peers
-    pub n_players: u16, // number of players in the subnet
+    pub players: Vec<Player>,
     pub port_base: u16, // base port for the subnet
     pub player_number: u16, // player number for this player
 }
 
 impl SubNet {
-    fn init(&mut self, n_players: u16, port_base: u16) {
-        self.n_players = n_players;
+    fn init(&mut self, players: Vec<Player>, port_base: u16, player_number: u16) {
+        self.players = players;
         self.port_base = port_base;
-        self.player_number = 0;
-        self.hosts = Vec::new();
-        self.ports = Vec::new();
+        self.player_number = player_number;
     }
+
+    fn start_networking(&mut self) {
+        let mut players = Vec::new();
+        for i in 0..self.n_players {
+            let player = Player {
+                name: String::from("Player"),
+                ip: self.hosts[i as usize],
+                port: self.ports[i as usize],
+            };
+            players.push(player);
+        }
+        let mut server = Server::new();
+        server.init(players, self.player_number);
+        server.start();
+    }
+
 
 }
 
