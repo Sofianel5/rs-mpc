@@ -23,4 +23,11 @@ impl Player {
     fn exchange(&mut self, to: u16, msg: vec<u8>) -> vec<u8> { vec![] }
 
     fn pass_around(&mut self, send: vec<u8>, receive: vec<u8>) { }
+
+    fn send_all(&mut self, msg: vec<u8>) { }
+
+    fn receive_all(&mut self, msg: vec<u8>) { }
+
+    
 }
+
